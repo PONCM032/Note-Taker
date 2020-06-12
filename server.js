@@ -23,7 +23,12 @@ app.get("/notes", function (req, res) {
 
 //API Routes
 app.get("/api/notes", function (request, response) {
-  response.json(db);
+  response.json(db)
+  //---------------------
+  response.readFile(db, "utf8")
+    .then(function(note){
+        response.json(note);
+    });
 });
 
 app.post("/api/notes", function (request, response) {
@@ -32,53 +37,13 @@ app.post("/api/notes", function (request, response) {
 });
 
 app.delete("/api/notes/:id", function (request, response) {
-
+//sets ID# per note
     db.forEach((item, i) => {
         request.params.id = i + 1;
         console.log('Note ID: ', request.params.id)
-    });
-
-    // var id = request.params.id;
-
-    // let articles = await Article.findAll({tag: id}).exec();
-
-    // response.render('notes', {
-    //     articles: articles
-    // });
-//     var identifier = req.params(id);
-
-//   console.log(identifier);
-
-//   for (var i = 0; i < identifier.length; i++) {
-//     if (identifier === id[i].routeName) {
-//       return res.json(characters[i]);
-//     }
-//   }
-
-//   return res.json(false);
-
-
-//   var id = request.param("id");
-  
-//   MyModel.remove({
-//       _id: id 
-//   }, function(err){
-//       if (err) {
-//           console.log(err)
-//       }
-//       else {
-//          return res.send("Removed");
-//       }
-//   });
-//   console.log(appID);
-
-  //   for (var i = 0; i < characters.length; i++) {
-  //     if (chosen === characters[i].routeName) {
-  //       return res.json(characters[i]);
-  //     }
-  //   }
-
-  //   return res.json(false);
+    }).then(function(){
+        console.log("TEST");
+    })
 });
 
 // ROUTES
