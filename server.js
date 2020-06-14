@@ -47,15 +47,15 @@ app.post("/api/notes", function (req, res) {
 
 app.delete("/api/notes/:id", function (req, res) {
 
-  data = data.filter((item) => {
+  const newData = data.filter((item) => {
   
     return item.id !== parseInt(req.params.id);
   });
 
-  console.log(data.length);
+  console.log(newData.length);
   fs.writeFile(
     path.join(__dirname, "./db/db.json"),
-    JSON.stringify(data),
+    JSON.stringify(newData),
     function (err) {
       if (err) throw err;
       console.log("Note has been successfully deleted!");
